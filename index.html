@@ -7,17 +7,24 @@
 <style>
   *{box-sizing:border-box}
   body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:linear-gradient(160deg,#0f2a4a,#1b6b6f);color:#fff;text-align:center}
-  h1{margin:0;font-size:clamp(44px,12vw,84px);letter-spacing:2px}
+  h1{margin:0;font-size:clamp(44px,12vw,84px);letter-spacing:2px;cursor:pointer;user-select:none}
   .group{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:360px}
   .group>button{font:inherit;font-size:22px;font-weight:700;padding:14px 40px;border:0;border-radius:999px;background:#ffd23f;color:#3a2a00;cursor:pointer}
   .list{display:none;flex-direction:column;gap:12px;width:100%}
   .list.open{display:flex}
-  .list a,.list span{display:block;padding:16px;border-radius:16px;background:rgba(255,255,255,.14);color:#fff;font-size:20px;font-weight:600;text-decoration:none}
-  .list span{opacity:.6;font-weight:400}
+  .list a{display:block;padding:16px;border-radius:16px;background:rgba(255,255,255,.14);color:#fff;font-size:20px;font-weight:600;text-decoration:none}
+
+  /* In-page viewer: keeps the address bar on nuloha.com */
+  #viewer{display:none;position:fixed;inset:0;z-index:10;flex-direction:column;background:#0f2a4a}
+  #viewer.open{display:flex}
+  #bar{display:flex;align-items:center;gap:12px;padding:8px 12px;background:#0f2a4a;border-bottom:1px solid rgba(255,255,255,.2)}
+  #bar button{font:inherit;font-size:18px;font-weight:700;padding:8px 18px;border:0;border-radius:999px;background:#ffd23f;color:#3a2a00;cursor:pointer}
+  #bar span{font-size:18px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #frame{flex:1;width:100%;border:0;background:#fff}
 </style>
 </head>
 <body>
-  <h1>Nuloha</h1>
+  <h1 id="title" title="Back to the main page">Nuloha</h1>
 
   <div class="group">
     <button aria-expanded="false">Games</button>
@@ -25,38 +32,81 @@
       <a href="/games/spider-takedown/">🕷️ Spider Takedown</a>
       <a href="/games/build-a-home/">🏠 Build a Home</a>
       <a href="/games/spot-the-difference/">🔍 Spot the Difference</a>
+      <a href="#build-a-life" data-src="https://robdoyle2.github.io/build-a-life/">🌱 Build a Life</a>
     </div>
   </div>
 
   <div class="group">
     <button aria-expanded="false">Organizing</button>
     <div class="list">
-      <span>Coming soon</span>
-      <!-- Add links here, e.g. <a href="/games/my-app/">My App</a> -->
+      <a href="#my-organizer" data-src="https://robdoyle2.github.io/MyOrganizerClaude/">🗂️ My Organizer</a>
+      <a href="#backup-dr-project" data-src="https://robdoyle2.github.io/Project-Manager-bk-and-DR-/Backup-DR-Project.html">💾 Backup &amp; DR Project</a>
     </div>
   </div>
 
   <div class="group">
     <button aria-expanded="false">Hobbies</button>
     <div class="list">
-      <span>Coming soon</span>
+      <a href="#speaking-course" data-src="https://robdoyle2.github.io/SpeakingCourse6months/">🗣️ Speaking Course</a>
+      <a href="#kayaking-trip-planner" data-src="https://robdoyle2.github.io/kayaking-trip-planner/">🛶 Kayaking Trip Planner</a>
     </div>
   </div>
 
   <div class="group">
     <button aria-expanded="false">Work</button>
     <div class="list">
-      <span>Coming soon</span>
+      <a href="#cve" data-src="https://robdoyle2.github.io/CVE/">🛡️ CVE</a>
     </div>
   </div>
 
+  <div id="viewer">
+    <div id="bar"><button id="back">← Nuloha</button><span id="name"></span></div>
+    <iframe id="frame" title="App"></iframe>
+  </div>
+
   <script>
+    var lists=document.querySelectorAll('.list'),
+        viewer=document.getElementById('viewer'),
+        frame=document.getElementById('frame'),
+        nameEl=document.getElementById('name');
+
     document.querySelectorAll('.group>button').forEach(function(b){
       b.onclick=function(){
         var o=b.nextElementSibling.classList.toggle('open');
         b.setAttribute('aria-expanded',o);
       };
     });
+
+    function closeViewer(){
+      viewer.classList.remove('open');
+      frame.src='about:blank';
+      document.title='Nuloha';
+    }
+    function openFromHash(){
+      var h=location.hash,a=h&&document.querySelector('a[data-src][href="'+h+'"]');
+      if(a){
+        frame.src=a.getAttribute('data-src');
+        nameEl.textContent=a.textContent;
+        document.title=a.textContent+' – Nuloha';
+        viewer.classList.add('open');
+      }else{
+        closeViewer();
+      }
+    }
+    // Clicking "Nuloha" (title or the bar button) returns to the four-button start page
+    function goHome(){
+      closeViewer();
+      lists.forEach(function(l){
+        l.classList.remove('open');
+        l.previousElementSibling.setAttribute('aria-expanded','false');
+      });
+      if(location.hash)history.pushState(null,'',location.pathname);
+      window.scrollTo(0,0);
+    }
+    document.getElementById('title').onclick=goHome;
+    document.getElementById('back').onclick=goHome;
+    window.addEventListener('hashchange',openFromHash);
+    openFromHash();
   </script>
 </body>
 </html>
