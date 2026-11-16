@@ -8,21 +8,55 @@
   *{box-sizing:border-box}
   body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:linear-gradient(160deg,#0f2a4a,#1b6b6f);color:#fff;text-align:center}
   h1{margin:0;font-size:clamp(44px,12vw,84px);letter-spacing:2px}
-  button{font:inherit;font-size:22px;font-weight:700;padding:14px 40px;border:0;border-radius:999px;background:#ffd23f;color:#3a2a00;cursor:pointer}
-  #games{display:none;flex-direction:column;gap:12px;width:100%;max-width:360px}
-  #games.open{display:flex}
-  #games a{display:block;padding:16px;border-radius:16px;background:rgba(255,255,255,.14);color:#fff;font-size:20px;font-weight:600;text-decoration:none}
+  .group{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:360px}
+  .group>button{font:inherit;font-size:22px;font-weight:700;padding:14px 40px;border:0;border-radius:999px;background:#ffd23f;color:#3a2a00;cursor:pointer}
+  .list{display:none;flex-direction:column;gap:12px;width:100%}
+  .list.open{display:flex}
+  .list a,.list span{display:block;padding:16px;border-radius:16px;background:rgba(255,255,255,.14);color:#fff;font-size:20px;font-weight:600;text-decoration:none}
+  .list span{opacity:.6;font-weight:400}
 </style>
 </head>
 <body>
   <h1>Nuloha</h1>
-  <button id="btn" aria-expanded="false">Games</button>
-  <div id="games">
-    <a href="/games/spider-takedown/">🕷️ Spider Takedown</a>
+
+  <div class="group">
+    <button aria-expanded="false">Games</button>
+    <div class="list">
+      <a href="/games/spider-takedown/">🕷️ Spider Takedown</a>
+      <a href="/games/build-a-home/">🏠 Build a Home</a>
+      <a href="/games/spot-the-difference/">🔍 Spot the Difference</a>
+    </div>
   </div>
+
+  <div class="group">
+    <button aria-expanded="false">Organizing</button>
+    <div class="list">
+      <span>Coming soon</span>
+      <!-- Add links here, e.g. <a href="/games/my-app/">My App</a> -->
+    </div>
+  </div>
+
+  <div class="group">
+    <button aria-expanded="false">Hobbies</button>
+    <div class="list">
+      <span>Coming soon</span>
+    </div>
+  </div>
+
+  <div class="group">
+    <button aria-expanded="false">Work</button>
+    <div class="list">
+      <span>Coming soon</span>
+    </div>
+  </div>
+
   <script>
-    var b=document.getElementById('btn'),g=document.getElementById('games');
-    b.onclick=function(){var o=g.classList.toggle('open');b.setAttribute('aria-expanded',o);};
+    document.querySelectorAll('.group>button').forEach(function(b){
+      b.onclick=function(){
+        var o=b.nextElementSibling.classList.toggle('open');
+        b.setAttribute('aria-expanded',o);
+      };
+    });
   </script>
 </body>
 </html>
