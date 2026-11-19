@@ -86,7 +86,9 @@
     function openFromHash(){
       var h=location.hash,a=h&&document.querySelector('a[data-src][href="'+h+'"]');
       if(a){
-        frame.src=a.getAttribute('data-src');
+        // Add a changing version number so the browser never shows a cached copy
+        var u=a.getAttribute('data-src');
+        frame.src=u+(u.indexOf('?')<0?'?':'&')+'v='+Date.now();
         nameEl.textContent=a.textContent;
         document.title=a.textContent+' – Nuloha';
         viewer.classList.add('open');
