@@ -35,7 +35,7 @@ button{font-family:inherit;cursor:pointer}
 .hud .cds b.rdy{opacity:1;background:rgba(255,255,255,.88);color:#2b1b3d}
 .hud .flash{position:absolute;inset:0;background:radial-gradient(circle,rgba(255,0,40,0) 40%,rgba(255,0,40,.65) 100%);opacity:0}
 .hud .downmsg{position:absolute;left:0;right:0;top:38%;text-align:center;font-size:clamp(18px,4vmin,34px);font-weight:700;text-shadow:0 2px 8px #000;display:none}
-.hud .score{position:absolute;right:8px;top:8px;font-weight:700;font-size:clamp(10px,1.8vmin,15px);background:rgba(20,10,40,.45);padding:2px 9px;border-radius:999px}
+.hud .score{position:absolute;right:8px;top:20px;font-weight:700;font-size:clamp(10px,1.8vmin,15px);background:rgba(20,10,40,.45);padding:2px 9px;border-radius:999px}
 /* ---------- global bar ---------- */
 #top{position:fixed;left:0;right:0;top:6px;text-align:center;pointer-events:none;z-index:5;display:none}
 #obj{display:inline-block;background:rgba(20,10,40,.62);padding:5px 16px;border-radius:999px;font-weight:700;font-size:clamp(11px,2.2vmin,18px);box-shadow:0 2px 10px rgba(0,0,0,.35)}
@@ -159,10 +159,12 @@ button.sec.on{background:rgba(120,220,140,.45)}
 @media (max-aspect-ratio:1/1){#shop{align-items:flex-end;justify-content:center;background:linear-gradient(180deg,rgba(10,5,30,0) 35%,rgba(10,5,30,.6))}.shopbox{width:96vw;max-height:60vh}}
 .hud .lvl{font-size:.8em;background:#ffd23f;color:#3d1b00;border-radius:999px;padding:0 7px}
 .hud .prompt{position:absolute;left:0;right:0;bottom:34px;text-align:center;font-weight:700;font-size:clamp(11px,2.1vmin,16px);text-shadow:0 2px 5px #000}
+#ver{position:fixed;right:6px;top:2px;z-index:30;pointer-events:none;font:700 clamp(9px,1.6vmin,12px) 'Fredoka',sans-serif;color:#fff;opacity:.75;text-shadow:0 1px 3px #000}
 #err{position:fixed;left:0;right:0;top:0;z-index:99;background:#b00020;color:#fff;font:12px monospace;padding:6px;display:none;white-space:pre-wrap}
 </style>
 </head>
 <body>
+<div id="ver">v0.01</div>
 <canvas id="c"></canvas>
 <div id="top"><div id="obj"></div><div id="boss"><div class="nm">🔥 Fire Ant Captain Blaze 🔥</div><div class="bar"><i></i></div></div></div>
 <div id="banner"></div>
